@@ -7,10 +7,14 @@
     {% for author in author_list %}
       <li>
 	      <a href="{{ author.get_absolute_url }}">{{ author.last_name }} {{ author.first_name }}</a>
+	      {% if perms.catalog.can_mark_returned %}
+	      <a href="/catalog/author/{{author.id}}/update">[update author]</a>
+	      <a href="/catalog/author/{{author.id}}/delete">[delete author]</a>
+              {% endif %}       
       </li>
     {% endfor %}
   </ul>
   {% else %}
-    <p>There are no books in the library.</p>
+    <p>There are no authors in the library.</p>
   {% endif %}       
  {% endblock %}

@@ -18,7 +18,8 @@
         {{ copy.get_status_display }}
       </p>
       {% if copy.status != 'a' %}
-        <p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
+        <p><strong>Due to be returned:</strong> {{ copy.due_back }}
+        {% if perms.catalog.can_mark_returned %}<a href="{% url 'renew-book-librarian' copy.id %}">Renew</a>{% endif %}</p>
       {% endif %}
       <p><strong>Imprint:</strong> {{ copy.imprint }}</p>
       <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>

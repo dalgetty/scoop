@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User 
 from datetime import date
+from django.urls import reverse # Used to generate URLs by reversing the URL patterns
 
 # Create your models here.
 
@@ -11,8 +12,6 @@ class Genre(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return self.name
-
-from django.urls import reverse # Used to generate URLs by reversing the URL patterns
 
 class Language(models.Model):
     name = models.CharField(max_length=50)
@@ -47,9 +46,9 @@ class Book(models.Model):
     
     display_genre.short_description = 'Genre'
    
-    language = models.ManyToManyField(Language, help_text='Select a language for this book')
+    language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True, help_text='Select a language for this book')
     def display_language(self):
-        return ', '.join(language.name for language in self.language.all()[:3])
+        return language.name
     
     display_language.short_description = 'Language'
    
@@ -62,7 +61,6 @@ class Book(models.Model):
         return reverse('book-detail', args=[str(self.id)])
 
 import uuid # Required for unique book instances
-
 class BookInstance(models.Model):
     """Model representing a specific copy of a book (i.e. that can be borrowed from the library)."""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular book across whole library')
