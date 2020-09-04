@@ -163,6 +163,9 @@ def upload(request):
             form.save()
             print('can i kick it')
             return redirect('authors')
+        else:
+            print('from cross the usa')
+            return redirect('authors')
     else:
         form = DocumentForm()
         print('a square with a horn')
