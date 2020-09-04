@@ -22,7 +22,7 @@ class RenewBookForm(forms.Form):
         return data
 
 from django.forms import ModelForm
-from catalog.models import BookInstance
+from catalog.models import BookInstance, Document
 
 class RenewBookModelForm(ModelForm):
     def clean_due_back(self):
@@ -43,6 +43,9 @@ class RenewBookModelForm(ModelForm):
         model = BookInstance
         fields = ['due_back']
         labels = {'due_back': _('Renewal date')}
-        help_texts = {'due_back': _('Enter a date between now and 4 weeks (default 3).')} 
+        help_texts = {'due_back': _('Enter a date between now and 4 weeks (default 3).')}
 
- 
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ('description', 'document', )

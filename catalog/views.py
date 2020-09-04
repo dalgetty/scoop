@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from catalog.models import Book, Author, BookInstance, Genre, Language
+from catalog.models import Book, Author, BookInstance, Genre, Language, Document
 
 def index(request):
     """View function for home page of site."""
@@ -154,4 +154,19 @@ class BookDelete(PermissionRequiredMixin,DeleteView):
     model = Book
     success_url = reverse_lazy('books')
 
+from catalog.forms import DocumentForm
+
+def upload(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            print('can i kick it')
+            return redirect('authors')
+    else:
+        form = DocumentForm()
+        print('a square with a horn')
+    return render(request, 'catalog/upload.html', {
+        'form': form
+    })
 

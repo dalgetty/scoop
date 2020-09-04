@@ -116,3 +116,7 @@ class Author(models.Model):
         """String for representing the Model object."""
         return f'{self.last_name}, {self.first_name}'
 
+class Document(models.Model):
+    description = models.CharField(max_length=255, blank=True)
+    document = models.FileField(upload_to='documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
